@@ -1,111 +1,51 @@
-Modbus RTU Library
-Overview
-This is a lightweight Modbus RTU (Remote Terminal Unit) library implemented in C, supporting both master and slave functionality. The library provides basic Modbus operations over serial communication with CRC error checking.
+# Modbus RTU Library
 
-Features
-Master Functionality
-Read Holding Registers (Function Code 0x03)
+![Modbus Protocol](https://img.shields.io/badge/Protocol-Modbus%20RTU-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-Write Single Register (Function Code 0x06)
+A lightweight C implementation of Modbus RTU protocol with both master and slave functionality, designed for embedded systems.
 
-Write Multiple Registers (Function Code 0x10)
+## Table of Contents
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Master Mode](#master-mode)
+  - [Slave Mode](#slave-mode)
+- [API Reference](#api-reference)
+- [Configuration](#configuration)
+- [Error Handling](#error-handling)
+- [Examples](#examples)
+- [Limitations](#limitations)
+- [Contributing](#contributing)
+- [License](#license)
 
-Custom string transmission function
+## Features
 
-CRC-16 error checking
+### Master Functionality
+- Read Holding Registers (FC 0x03)
+- Write Single Register (FC 0x06)
+- Write Multiple Registers (FC 0x10)
+- Custom string transmission
+- CRC-16 error checking
+- Configurable timeout handling
 
-Configurable timeout handling
+### Slave Functionality
+- Automatic request processing
+- Holding register access
+- Custom function code support
+- Error response generation
+- CRC verification
 
-Slave Functionality
-Process incoming Modbus requests
+## Getting Started
 
-Handle Holding Registers (Function Code 0x03)
+### Prerequisites
+- C compiler (GCC, ARMCC, etc.)
+- UART peripheral with interrupts
+- Basic timing functions (millisecond delay)
 
-Support for custom string function (Function Code 0x41)
-
-Automatic error response generation
-
-CRC verification
-
-Usage
-Master Initialization
-c
-ModbusMaster master;
-ModbusMaster_Init(&master, 
-                 SLAVE_ADDRESS, 
-                 uart_send_function, 
-                 uart_receive_function,
-                 delay_ms_function);
-Common Master Operations
-Read Holding Registers:
-
-c
-uint16_t values[10];
-ModbusError err = ModbusMaster_ReadHoldingRegisters(&master, 0, 10, values);
-Write Single Register:
-
-c
-ModbusError err = ModbusMaster_WriteSingleRegister(&master, 0, 0x1234);
-Write Multiple Registers:
-
-c
-uint16_t values[] = {0x1234, 0x5678};
-ModbusError err = ModbusMaster_WriteMultipleRegisters(&master, 0, 2, values);
-Send String:
-
-c
-ModbusError err = ModbusMaster_SendString(&master, 0, "Hello Modbus!");
-Slave Implementation
-c
-ModbusSlave slave;
-ModbusSlave_Init(&slave, SLAVE_ADDRESS);
-
-// Main loop
-while(1) {
-    ModbusSlave_ProcessRequest(&slave);
-    // Your holding registers are accessible via slave.holding_registers[]
-}
-Configuration
-Define MODBUS_MAX_FRAME_SIZE - Maximum frame size (default should be at least 256)
-
-Define MODBUS_MAX_HOLDING_REGISTERS - Number of holding registers (default 100)
-
-Implement the required platform-specific functions:
-
-UART send/receive
-
-Delay function (milliseconds)
-
-Error Handling
-The library returns ModbusError codes:
-
-MODBUS_SUCCESS - Operation completed successfully
-
-MODBUS_ERR_TIMEOUT - No response from slave
-
-MODBUS_ERR_CRC_MISMATCH - CRC check failed
-
-MODBUS_ERR_INVALID_ADDRESS - Address mismatch
-
-MODBUS_ERR_SLAVE_FAILURE - Slave returned error
-
-MODBUS_ERR_INVALID_DATA - Invalid request/response data
-
-Limitations
-Currently supports only a subset of Modbus functions
-
-Requires platform-specific UART and timing implementations
-
-No support for broadcast messages
-
-Limited error recovery mechanisms
-
-Dependencies
-Standard C library (for memset, etc.)
-
-Platform-specific UART driver
-
-Millisecond delay function
-
-License
-MIT License - Free for commercial and personal use.
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/modbus-rtu.git
