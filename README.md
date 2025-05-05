@@ -48,4 +48,4 @@ A lightweight C implementation of Modbus RTU protocol with both master and slave
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/modbus-rtu.git
+   [https://github.com/navidbaghaee/Modbus-RTU.git]
